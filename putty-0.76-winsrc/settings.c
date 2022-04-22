@@ -1009,11 +1009,11 @@ void load_open_settings(settings_r *sesskey, Conf *conf)
     gprefs(sesskey, "HostKey", "ed25519,ecdsa,rsa,dsa,WARN",
            hknames, HK_MAX, conf, CONF_ssh_hklist);
     gppb(sesskey, "PreferKnownHostKeys", true, conf, CONF_ssh_prefer_known_hostkeys);
-    gppi(sesskey, "RekeyTime", 60, conf, CONF_ssh_rekey_time);
+    gppi(sesskey, "RekeyTime", 180, conf, CONF_ssh_rekey_time);
 #ifndef NO_GSSAPI
     gppi(sesskey, "GssapiRekey", GSS_DEF_REKEY_MINS, conf, CONF_gssapirekey);
 #endif
-    gpps(sesskey, "RekeyBytes", "1G", conf, CONF_ssh_rekey_data);
+    gpps(sesskey, "RekeyBytes", "10G", conf, CONF_ssh_rekey_data);
     {
         /* SSH-2 only by default */
         int sshprot = gppi_raw(sesskey, "SshProt", 3);
