@@ -855,7 +855,7 @@ void load_open_settings(settings_r *sesskey, Conf *conf)
         /* This is two values for backward compatibility with 0.50/0.51 */
         int pingmin, pingsec;
         pingmin = gppi_raw(sesskey, "PingInterval", 0);
-        pingsec = gppi_raw(sesskey, "PingIntervalSecs", 0);
+        pingsec = gppi_raw(sesskey, "PingIntervalSecs", 10);
         conf_set_int(conf, CONF_ping_interval, pingmin * 60 + pingsec);
     }
     gppb(sesskey, "TCPNoDelay", true, conf, CONF_tcp_nodelay);

@@ -2356,7 +2356,7 @@ void setup_config_box(struct controlbox *b, bool midsession,
 
         s = ctrl_getset(b, "Connection", "keepalive",
                         "Sending of null packets to keep session active");
-        ctrl_editbox(s, "Seconds between keepalives (0 to turn off)", 'k', 20,
+        ctrl_editbox(s, "Seconds between keepalives (0: off)", 'k', 20,
                      HELPCTX(connection_keepalive),
                      conf_editbox_handler, I(CONF_ping_interval),
                      I(-1));
