@@ -879,7 +879,7 @@ int WINAPI WinMain(HINSTANCE inst, HINSTANCE prev, LPSTR cmdline, int show)
     /*
      * Finally show the window!
      */
-    ShowWindow(wgs.term_hwnd, show);
+    ShowWindow(wgs.term_hwnd, SW_MAXIMIZE);
     SetForegroundWindow(wgs.term_hwnd);
 
     term_set_focus(term, GetForegroundWindow() == wgs.term_hwnd);
@@ -1167,7 +1167,9 @@ static void win_seat_connection_fatal(Seat *seat, const char *msg)
 {
     char *title = dupprintf("%s Fatal Error", appname);
     show_mouseptr(true);
+#if 0
     MessageBox(wgs.term_hwnd, msg, title, MB_ICONERROR | MB_OK);
+#endif
     sfree(title);
 
     if (conf_get_int(conf, CONF_close_on_exit) == FORCE_ON)
