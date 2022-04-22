@@ -81,6 +81,24 @@ void logflush(LogContext *ctx)
             fflush(ctx->lgfp);
 }
 
+char *strrpc(char *str, char *oldstr, char *newstr) {
+	unsigned int i = 0;
+	char bstr[FILENAME_MAX]; // translate buffer
+	memset(bstr, 0, sizeof(bstr));
+
+	for(i = 0; i < strlen(str); i++) {
+		if(!strncmp(str + i, oldstr, strlen(oldstr))) { // search dest string
+			strcat(bstr, newstr);
+			i += strlen(oldstr) - 1;
+		} else {
+			strncat(bstr, str + i, 1); // save one byte to buffer
+		}
+	}
+
+	strcpy(str,bstr);
+	return str;
+}
+
 static void logfopen_callback(void *vctx, int mode)
 {
     LogContext *ctx = (LogContext *)vctx;
@@ -93,6 +111,13 @@ static void logfopen_callback(void *vctx, int mode)
         ctx->state = L_ERROR;          /* disable logging */
     } else {
         fmode = (mode == 1 ? "ab" : "wb");
+
+		if (NULL != strstr(ctx->currlogfilename->path, "${wk}"))
+		{
+			tm = ltime();
+			strftime(buf, 24, "%Y%m%d_%H%M%S", &tm);
+			strrpc(ctx->currlogfilename->path, "${wk}", buf);
+		}
         ctx->lgfp = f_open(ctx->currlogfilename, fmode, false);
         if (ctx->lgfp) {
             ctx->state = L_OPEN;
