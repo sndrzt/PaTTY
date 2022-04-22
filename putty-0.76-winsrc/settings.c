@@ -825,7 +825,7 @@ void load_open_settings(settings_r *sesskey, Conf *conf)
 
     gpps(sesskey, "HostName", "", conf, CONF_host);
     gppfile(sesskey, "LogFileName", conf, CONF_logfilename);
-    gppi(sesskey, "LogType", 0, conf, CONF_logtype);
+    gppi(sesskey, "LogType", 1, conf, CONF_logtype);
     gppi(sesskey, "LogFileClash", LGXF_ASK, conf, CONF_logxfovr);
     gppb(sesskey, "LogFlush", true, conf, CONF_logflush);
     gppb(sesskey, "LogHeader", true, conf, CONF_logheader);
@@ -850,7 +850,7 @@ void load_open_settings(settings_r *sesskey, Conf *conf)
     /* The CloseOnExit numbers are arranged in a different order from
      * the standard FORCE_ON / FORCE_OFF / AUTO. */
     i = gppi_raw(sesskey, "CloseOnExit", 1); conf_set_int(conf, CONF_close_on_exit, (i+1)%3);
-    gppb(sesskey, "WarnOnClose", true, conf, CONF_warn_on_close);
+    gppb(sesskey, "WarnOnClose", false, conf, CONF_warn_on_close);
     {
         /* This is two values for backward compatibility with 0.50/0.51 */
         int pingmin, pingsec;
@@ -1083,7 +1083,7 @@ void load_open_settings(settings_r *sesskey, Conf *conf)
     gppi(sesskey, "LocalEdit", AUTO, conf, CONF_localedit);
     gpps(sesskey, "Answerback", "PuTTY", conf, CONF_answerback);
     gppb(sesskey, "AlwaysOnTop", false, conf, CONF_alwaysontop);
-    gppb(sesskey, "FullScreenOnAltEnter", false,
+    gppb(sesskey, "FullScreenOnAltEnter", true,
          conf, CONF_fullscreenonaltenter);
     gppb(sesskey, "HideMousePtr", false, conf, CONF_hide_mouseptr);
     gppb(sesskey, "SunkenEdge", false, conf, CONF_sunken_edge);
@@ -1116,7 +1116,7 @@ void load_open_settings(settings_r *sesskey, Conf *conf)
                  / 1000
 #endif
                  );
-    gppi(sesskey, "ScrollbackLines", 2000, conf, CONF_savelines);
+    gppi(sesskey, "ScrollbackLines", 10485760, conf, CONF_savelines);
     gppb(sesskey, "DECOriginMode", false, conf, CONF_dec_om);
     gppb(sesskey, "AutoWrapMode", true, conf, CONF_wrap_mode);
     gppb(sesskey, "LFImpliesCR", false, conf, CONF_lfhascr);
@@ -1125,8 +1125,8 @@ void load_open_settings(settings_r *sesskey, Conf *conf)
     gppb(sesskey, "DisableBidi", false, conf, CONF_no_bidi);
     gppb(sesskey, "WinNameAlways", true, conf, CONF_win_name_always);
     gpps(sesskey, "WinTitle", "", conf, CONF_wintitle);
-    gppi(sesskey, "TermWidth", 80, conf, CONF_width);
-    gppi(sesskey, "TermHeight", 24, conf, CONF_height);
+    gppi(sesskey, "TermWidth", 237, conf, CONF_width);
+    gppi(sesskey, "TermHeight", 63, conf, CONF_height);
     gppfont(sesskey, "Font", conf, CONF_font);
     gppi(sesskey, "FontQuality", FQ_DEFAULT, conf, CONF_font_quality);
     gppi(sesskey, "FontVTMode", VT_UNICODE, conf, CONF_vtmode);
@@ -1201,7 +1201,7 @@ void load_open_settings(settings_r *sesskey, Conf *conf)
      * The empty default for LineCodePage will be converted later
      * into a plausible default for the locale.
      */
-    gpps(sesskey, "LineCodePage", "", conf, CONF_line_codepage);
+    gpps(sesskey, "LineCodePage", "UTF-8", conf, CONF_line_codepage);
     gppb(sesskey, "CJKAmbigWide", false, conf, CONF_cjk_ambig_wide);
     gppb(sesskey, "UTF8Override", true, conf, CONF_utf8_override);
     gpps(sesskey, "Printer", "", conf, CONF_printer);
@@ -1215,8 +1215,8 @@ void load_open_settings(settings_r *sesskey, Conf *conf)
     gppi(sesskey, "LockSize", 0, conf, CONF_resize_action);
     gppb(sesskey, "BCE", true, conf, CONF_bce);
     gppb(sesskey, "BlinkText", false, conf, CONF_blinktext);
-    gppb(sesskey, "X11Forward", false, conf, CONF_x11_forward);
-    gpps(sesskey, "X11Display", "", conf, CONF_x11_display);
+    gppb(sesskey, "X11Forward", true, conf, CONF_x11_forward);
+    gpps(sesskey, "X11Display", ":0.0", conf, CONF_x11_display);
     gppi(sesskey, "X11AuthType", X11_MIT, conf, CONF_x11_auth);
     gppfile(sesskey, "X11AuthFile", conf, CONF_xauthfile);
 
@@ -1254,11 +1254,11 @@ void load_open_settings(settings_r *sesskey, Conf *conf)
     gppfont(sesskey, "WideBoldFont", conf, CONF_wideboldfont);
     gppi(sesskey, "ShadowBoldOffset", 1, conf, CONF_shadowboldoffset);
     gpps(sesskey, "SerialLine", "", conf, CONF_serline);
-    gppi(sesskey, "SerialSpeed", 9600, conf, CONF_serspeed);
+    gppi(sesskey, "SerialSpeed", 115200, conf, CONF_serspeed);
     gppi(sesskey, "SerialDataBits", 8, conf, CONF_serdatabits);
     gppi(sesskey, "SerialStopHalfbits", 2, conf, CONF_serstopbits);
     gppi(sesskey, "SerialParity", SER_PAR_NONE, conf, CONF_serparity);
-    gppi(sesskey, "SerialFlowControl", SER_FLOW_XONXOFF, conf, CONF_serflow);
+    gppi(sesskey, "SerialFlowControl", SER_FLOW_NONE, conf, CONF_serflow);
     gpps(sesskey, "WindowClass", "", conf, CONF_winclass);
     gppb(sesskey, "ConnectionSharing", false,
          conf, CONF_ssh_connection_sharing);
