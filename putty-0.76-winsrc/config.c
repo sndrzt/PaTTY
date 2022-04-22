@@ -2931,10 +2931,10 @@ void setup_config_box(struct controlbox *b, bool midsession,
                           "Options controlling SSH X11 forwarding");
 
             s = ctrl_getset(b, "Connection/SSH/X11", "x11", "X11 forwarding");
-            ctrl_checkbox(s, "Enable X11 forwarding", 'e',
+            ctrl_checkbox(s, "Enable X11 forwarding (work with vcxsrv-1.20.9.0)", 'e',
                           HELPCTX(ssh_tunnels_x11),
                           conf_checkbox_handler,I(CONF_x11_forward));
-            ctrl_editbox(s, "X display location", 'x', 50,
+            ctrl_editbox(s, "X display location (ip:card.disp)", 'x', 43,
                          HELPCTX(ssh_tunnels_x11),
                          conf_editbox_handler, I(CONF_x11_display), I(1));
             ctrl_radiobuttons(s, "Remote X11 authentication protocol", 'u', 2,

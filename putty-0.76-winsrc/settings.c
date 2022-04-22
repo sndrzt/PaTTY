@@ -1228,7 +1228,7 @@ void load_open_settings(settings_r *sesskey, Conf *conf)
     gppb(sesskey, "BCE", true, conf, CONF_bce);
     gppb(sesskey, "BlinkText", false, conf, CONF_blinktext);
     gppb(sesskey, "X11Forward", true, conf, CONF_x11_forward);
-    gpps(sesskey, "X11Display", ":0.0", conf, CONF_x11_display);
+    gpps(sesskey, "X11Display", "localhost:0.0", conf, CONF_x11_display);
     gppi(sesskey, "X11AuthType", X11_MIT, conf, CONF_x11_auth);
     gppfile(sesskey, "X11AuthFile", conf, CONF_xauthfile);
 
