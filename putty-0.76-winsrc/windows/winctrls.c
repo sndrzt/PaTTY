@@ -1210,7 +1210,7 @@ void winctrl_add_shortcuts(struct dlgparam *dp, struct winctrl *c)
     for (i = 0; i < lenof(c->shortcuts); i++)
         if (c->shortcuts[i] != NO_SHORTCUT) {
             unsigned char s = tolower((unsigned char)c->shortcuts[i]);
-            assert(!dp->shortcuts[s]);
+            //assert(!dp->shortcuts[s]);
             dp->shortcuts[s] = true;
         }
 }
@@ -1221,7 +1221,7 @@ void winctrl_rem_shortcuts(struct dlgparam *dp, struct winctrl *c)
     for (i = 0; i < lenof(c->shortcuts); i++)
         if (c->shortcuts[i] != NO_SHORTCUT) {
             unsigned char s = tolower((unsigned char)c->shortcuts[i]);
-            assert(dp->shortcuts[s]);
+            //assert(dp->shortcuts[s]);
             dp->shortcuts[s] = false;
         }
 }
