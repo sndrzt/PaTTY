@@ -31,6 +31,7 @@ struct ssh2_userauth_state {
     bool show_banner, tryagent, notrivialauth, change_username;
     char *hostname, *fullhostname;
     char *default_username;
+    char* default_password;
     bool try_ki_auth, try_gssapi_auth, try_gssapi_kex_auth, gssapi_fwd;
 
     ptrlen session_id;
@@ -136,7 +137,7 @@ PacketProtocolLayer *ssh2_userauth_new(
     PacketProtocolLayer *successor_layer,
     const char *hostname, const char *fullhostname,
     Filename *keyfile, bool show_banner, bool tryagent, bool notrivialauth,
-    const char *default_username, bool change_username,
+    const char *default_username, const char *default_password, bool change_username,
     bool try_ki_auth, bool try_gssapi_auth, bool try_gssapi_kex_auth,
     bool gssapi_fwd, struct ssh_connection_shared_gss_state *shgss)
 {
@@ -152,6 +153,7 @@ PacketProtocolLayer *ssh2_userauth_new(
     s->tryagent = tryagent;
     s->notrivialauth = notrivialauth;
     s->default_username = dupstr(default_username);
+    s->default_password = dupstr(default_password);
     s->change_username = change_username;
     s->try_ki_auth = try_ki_auth;
     s->try_gssapi_auth = try_gssapi_auth;
@@ -1494,6 +1496,9 @@ static void ssh2_userauth_process_queue(PacketProtocolLayer *ppl)
                                                     s->username, s->hostname),
                            false);
 
+                if (s->default_password != NULL) {
+                    s->password = dupstr(s->default_password);
+                } else {
                 s->userpass_ret = seat_get_userpass_input(
                     s->ppl.seat, s->cur_prompt, NULL);
                 while (1) {
@@ -1527,7 +1532,7 @@ static void ssh2_userauth_process_queue(PacketProtocolLayer *ppl)
                  */
                 s->password = prompt_get_result(s->cur_prompt->prompts[0]);
                 free_prompts(s->cur_prompt);
-
+                }
                 /*
                  * Send the password packet.
                  *

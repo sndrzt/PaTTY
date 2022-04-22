@@ -249,6 +249,7 @@ static void ssh_got_ssh_version(struct ssh_version_receiver *rcv,
                 transport_child_layer = connection_layer;
             } else {
                 char *username = get_remote_username(ssh->conf);
+                char *password = get_remote_password(ssh->conf);
 
                 userauth_layer = ssh2_userauth_new(
                     connection_layer, ssh->savedhost, ssh->fullhostname,
@@ -257,6 +258,7 @@ static void ssh_got_ssh_version(struct ssh_version_receiver *rcv,
                     conf_get_bool(ssh->conf, CONF_tryagent),
                     conf_get_bool(ssh->conf, CONF_ssh_no_trivial_userauth),
                     username,
+                    password,
                     conf_get_bool(ssh->conf, CONF_change_username),
                     conf_get_bool(ssh->conf, CONF_try_ki_auth),
 #ifndef NO_GSSAPI
