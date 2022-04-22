@@ -1813,7 +1813,7 @@ void setup_config_box(struct controlbox *b, bool midsession,
                                 HELPCTX(session_saved),
                                 sessionsaver_handler, P(ssd));
     ssd->listbox->generic.column = 0;
-    ssd->listbox->listbox.height = 7;
+    ssd->listbox->listbox.height = 6;
     if (!midsession) {
         ssd->loadbutton = ctrl_pushbutton(s, "Load", 'l',
                                           HELPCTX(session_saved),
