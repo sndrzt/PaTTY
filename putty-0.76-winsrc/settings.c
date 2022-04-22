@@ -1069,7 +1069,7 @@ void load_open_settings(settings_r *sesskey, Conf *conf)
     gppb(sesskey, "ApplicationKeypad", false, conf, CONF_app_keypad);
     gppb(sesskey, "NetHackKeypad", false, conf, CONF_nethack_keypad);
     gppb(sesskey, "AltF4", true, conf, CONF_alt_f4);
-    gppb(sesskey, "AltSpace", false, conf, CONF_alt_space);
+    gppb(sesskey, "AltSpace", true, conf, CONF_alt_space);
     gppb(sesskey, "AltOnly", false, conf, CONF_alt_only);
     gppb(sesskey, "ComposeKey", false, conf, CONF_compose_key);
     gppb(sesskey, "CtrlAltKeys", true, conf, CONF_ctrlaltkeys);
