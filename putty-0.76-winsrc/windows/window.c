@@ -4453,6 +4453,13 @@ static int TranslateKey(UINT message, WPARAM wParam, LPARAM lParam,
                 flip_full_screen();
             return -1;
         }
+		if (left_alt && wParam == VK_F12) {
+			term_pwron(term, TRUE);
+			if (ldisc)
+				ldisc_send(ldisc, NULL, 0, 0);
+			term_clrsb(term);
+			return -1;
+		}
         /* Control-Numlock for app-keypad mode switch */
         if (wParam == VK_PAUSE && shift_state == 2) {
             term->app_keypad_keys = !term->app_keypad_keys;
