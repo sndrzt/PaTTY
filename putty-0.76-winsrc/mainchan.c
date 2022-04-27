@@ -144,6 +144,7 @@ static void mainchan_open_confirmation(Channel *chan)
 
         if (conf_get_bool(mc->conf, CONF_x11_forward)) {
             char *x11_setup_err;
+            ppl_printf("X11 Display: \"%s\".\r\n", conf_get_str(mc->conf, CONF_x11_display));
             if ((x11disp = x11_setup_display(
                      conf_get_str(mc->conf, CONF_x11_display),
                      mc->conf, &x11_setup_err)) == NULL) {

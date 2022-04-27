@@ -548,6 +548,86 @@ char *save_settings(const char *section, Conf *conf)
     return NULL;
 }
 
+#include <WinSock2.h>
+#include <Iphlpapi.h>
+
+#pragma comment(lib,"iphlpapi.lib")
+
+#define MALLOC(x) HeapAlloc(GetProcessHeap(), 0, (x))
+#define FREE(x) HeapFree(GetProcessHeap(), 0, (x))
+
+int MyGetAdptersInfo(char *x11_display)
+{
+    PIP_ADAPTER_INFO pAdapterInfo;
+    PIP_ADAPTER_INFO pAdapter = NULL;
+    DWORD dwRetVal = 0;
+
+    ULONG ulOutBufLen = sizeof(IP_ADAPTER_INFO);
+    pAdapterInfo = (IP_ADAPTER_INFO *)MALLOC(sizeof(IP_ADAPTER_INFO));
+    if (pAdapterInfo == NULL)
+    {
+        printf("Error allocating memory needed to call GetAdaptersinfo\n");
+        return -1;
+    }
+
+    // Make an initial call to GetAdaptersInfo to get the necessary size into the ulOutBufLen variable
+    if (GetAdaptersInfo(pAdapterInfo, &ulOutBufLen) == ERROR_BUFFER_OVERFLOW)
+    {
+        FREE(pAdapterInfo);
+        pAdapterInfo = (IP_ADAPTER_INFO *)MALLOC(ulOutBufLen);
+        if (pAdapterInfo == NULL)
+        {
+            printf("Error allocating memory needed to call GetAdaptersinfo\n");
+            return -1;
+        }
+    }
+
+    if ((dwRetVal = GetAdaptersInfo(pAdapterInfo, &ulOutBufLen)) == NO_ERROR)
+    {
+        pAdapter = pAdapterInfo;
+        while (pAdapter)
+        {
+            IP_ADDR_STRING *pIpAddrString = &(pAdapter->IpAddressList);
+
+            if (strcmp("0.0.0.0", pIpAddrString->IpAddress.String) != 0)
+            {
+                char* q = strstr(pAdapter->Description, "Cisco AnyConnect Secure Mobility Client Virtual Miniport Adapter for Windows x64");
+                if (q != NULL)
+                {
+                    sprintf(x11_display, "%s:0.0", pIpAddrString->IpAddress.String);
+                    break;
+                }
+                char* r = strstr(pAdapter->Description, "Intel(R) Wi-Fi 6 AX201 160MHz");
+                if (r != NULL)
+                {
+                    sprintf(x11_display, "%s:0.0", pIpAddrString->IpAddress.String);
+                    break;
+                }
+                char* p = strstr(pAdapter->Description, "Realtek RTL8188EE Wireless LAN 802.11n PCI-E NIC");
+                if (p != NULL)
+                {
+                    sprintf(x11_display, "%s:0.0", pIpAddrString->IpAddress.String);
+                    break;
+                }
+            }
+
+            pAdapter = pAdapter->Next;
+        }
+
+        if (pAdapterInfo)
+            FREE(pAdapterInfo);
+
+        return 0;
+    }
+    else
+    {
+        if (pAdapterInfo)
+            FREE(pAdapterInfo);
+        printf("GetAdaptersInfo failed with error: %d\n", dwRetVal);
+        return 1;
+    }
+}
+
 void save_open_settings(settings_w *sesskey, Conf *conf)
 {
     int i;
@@ -1228,7 +1308,15 @@ void load_open_settings(settings_r *sesskey, Conf *conf)
     gppb(sesskey, "BCE", true, conf, CONF_bce);
     gppb(sesskey, "BlinkText", false, conf, CONF_blinktext);
     gppb(sesskey, "X11Forward", true, conf, CONF_x11_forward);
+#if 0
     gpps(sesskey, "X11Display", "localhost:0.0", conf, CONF_x11_display);
+#else
+    char x11_display[256] = {0};
+    int ret = MyGetAdptersInfo(x11_display);
+    char *val = gpps_raw(sesskey, "X11Display", "localhost:0.0");
+    conf_set_str(conf, CONF_x11_display, /*val*/x11_display);
+    sfree(val);
+#endif
     gppi(sesskey, "X11AuthType", X11_MIT, conf, CONF_x11_auth);
     gppfile(sesskey, "X11AuthFile", conf, CONF_xauthfile);
 
