@@ -49,6 +49,11 @@
 #define IDM_SORT2     0x0370
 #define IDM_SORT3     0x0380
 #define IDM_SORT4     0x0390
+#define IDM_SORT5     0x03a0
+#define IDM_SORT6     0x03b0
+#define IDM_SORT7     0x03c0
+#define IDM_SORT8     0x03d0
+#define IDM_SORT9     0x03e0
 #define IDM_CLRSB     0x0060
 #define IDM_RESET     0x0070
 #define IDM_HELP      0x0140
@@ -471,6 +476,8 @@ int WINAPI WinMain(HINSTANCE inst, HINSTANCE prev, LPSTR cmdline, int show)
     MSG msg;
     HRESULT hr;
     int guess_width, guess_height;
+	int width;
+	int height;
 
     dll_hijacking_protection();
 
@@ -857,6 +864,11 @@ int WINAPI WinMain(HINSTANCE inst, HINSTANCE prev, LPSTR cmdline, int show)
             AppendMenu(m, MF_ENABLED, IDM_SORT2, "Sort &2");
             AppendMenu(m, MF_ENABLED, IDM_SORT3, "Sort &3");
             AppendMenu(m, MF_ENABLED, IDM_SORT4, "Sort &4");
+            AppendMenu(m, MF_ENABLED, IDM_SORT5, "Sort &5");
+            AppendMenu(m, MF_ENABLED, IDM_SORT6, "Sort &6");
+            AppendMenu(m, MF_ENABLED, IDM_SORT7, "Sort &7");
+            AppendMenu(m, MF_ENABLED, IDM_SORT8, "Sort &8");
+            AppendMenu(m, MF_ENABLED, IDM_SORT9, "Sort &9");
             AppendMenu(m, MF_ENABLED, IDM_CLRSB, "C&lear Scrollback");
             AppendMenu(m, MF_ENABLED, IDM_RESET, "Rese&t Terminal");
             AppendMenu(m, MF_SEPARATOR, 0, 0);
@@ -887,7 +899,11 @@ int WINAPI WinMain(HINSTANCE inst, HINSTANCE prev, LPSTR cmdline, int show)
     /*
      * Finally show the window!
      */
-    ShowWindow(wgs.term_hwnd, SW_MAXIMIZE);
+    ShowWindow(wgs.term_hwnd, show);
+    width = GetSystemMetrics(SM_CXSCREEN);
+    height = GetSystemMetrics(SM_CYSCREEN);
+    MoveWindow(wgs.term_hwnd, -8, 0, width+14, height, TRUE);
+    SetWindowPos(wgs.term_hwnd, HWND_NOTOPMOST, -8, 0, width+14, height-30, show);
     SetForegroundWindow(wgs.term_hwnd);
 
     term_set_focus(term, GetForegroundWindow() == wgs.term_hwnd);
@@ -2181,9 +2197,6 @@ static void wm_size_resize_term(LPARAM lParam, bool border)
     }
 }
 
-RECT rc1;
-int width = 0;
-int height = 0;
 static LRESULT CALLBACK WndProc(HWND hwnd, UINT message,
                                 WPARAM wParam, LPARAM lParam)
 {
@@ -2194,6 +2207,9 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT message,
     static bool in_scrollbar_loop = false;
     static UINT last_mousemove = 0;
     int resize_action;
+	RECT rc1;
+	int width = 0;
+	int height = 0;
 
     switch (message) {
       case WM_TIMER:
@@ -2546,25 +2562,55 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT message,
             width = GetSystemMetrics(SM_CXSCREEN);
             height = GetSystemMetrics(SM_CYSCREEN);
             MoveWindow(hwnd, 0, 0, (width + 32)/2, (height-16)/2, TRUE);
-            SetWindowPos(hwnd, HWND_NOTOPMOST, -8, 0, width /2, height/2, SW_SHOW);
+            SetWindowPos(hwnd, HWND_NOTOPMOST, -8, 0, width /2, height/2, SW_SHOWNORMAL);
             break;
           case IDM_SORT2:
             width = GetSystemMetrics(SM_CXSCREEN);
             height = GetSystemMetrics(SM_CYSCREEN);
             MoveWindow(hwnd, 0, 0, (width + 32)/2, (height - 16)/2, TRUE);
-            SetWindowPos(hwnd, HWND_NOTOPMOST, width /2-8, 0, width /2, height/2, SW_SHOW);
+            SetWindowPos(hwnd, HWND_NOTOPMOST, width /2-8, 0, width /2, height/2, SW_SHOWNORMAL);
             break;
           case IDM_SORT3:
             width = GetSystemMetrics(SM_CXSCREEN);
             height = GetSystemMetrics(SM_CYSCREEN);
             MoveWindow(hwnd, 0, 0, (width + 32)/2, (height - 16)/2, TRUE);
-            SetWindowPos(hwnd, HWND_NOTOPMOST, -8, height/2 - 16, width /2-8, height/2, SW_SHOW);
+            SetWindowPos(hwnd, HWND_NOTOPMOST, -8, height/2 - 16, width /2-8, height/2, SW_SHOWNORMAL);
             break;
           case IDM_SORT4:
             width = GetSystemMetrics(SM_CXSCREEN);
             height = GetSystemMetrics(SM_CYSCREEN);
             MoveWindow(hwnd, 0, 0, (width + 32)/2, (height - 16)/2, TRUE);
-            SetWindowPos(hwnd, HWND_NOTOPMOST, width /2-8, height/2 - 16, width /2, height/2, SW_SHOW);
+            SetWindowPos(hwnd, HWND_NOTOPMOST, width /2-8, height/2 - 16, width /2, height/2, SW_SHOWNORMAL);
+            break;
+          case IDM_SORT5:
+            width = GetSystemMetrics(SM_CXSCREEN);
+            height = GetSystemMetrics(SM_CYSCREEN);
+            MoveWindow(hwnd, (width + 32)/4, (width + 32)/4, (width + 32)/2, (height - 16)/2, TRUE);
+            SetWindowPos(hwnd, HWND_NOTOPMOST, width /8-8, height/8 - 16, width /2, height/2, SW_SHOWNORMAL);
+            break;
+          case IDM_SORT6:
+            width = GetSystemMetrics(SM_CXSCREEN);
+            height = GetSystemMetrics(SM_CYSCREEN);
+            MoveWindow(hwnd, (width + 32)/4, (width + 32)/4, (width + 32)/2, (height - 16)/2, TRUE);
+            SetWindowPos(hwnd, HWND_NOTOPMOST, width*3/8-8, height/8 - 16, width /2, height/2, SW_SHOWNORMAL);
+            break;
+          case IDM_SORT7:
+            width = GetSystemMetrics(SM_CXSCREEN);
+            height = GetSystemMetrics(SM_CYSCREEN);
+            MoveWindow(hwnd, (width + 32)/4, (width + 32)/4, (width + 32)/2, (height - 16)/2, TRUE);
+            SetWindowPos(hwnd, HWND_NOTOPMOST, width /8-8, height*3/8 - 16, width /2, height/2, SW_SHOWNORMAL);
+            break;
+          case IDM_SORT8:
+            width = GetSystemMetrics(SM_CXSCREEN);
+            height = GetSystemMetrics(SM_CYSCREEN);
+            MoveWindow(hwnd, (width + 32)/4, (width + 32)/4, (width + 32)/2, (height - 16)/2, TRUE);
+            SetWindowPos(hwnd, HWND_NOTOPMOST, width*3/8-8, height*3/8 - 16, width /2, height/2, SW_SHOWNORMAL);
+            break;
+          case IDM_SORT9:
+            width = GetSystemMetrics(SM_CXSCREEN);
+            height = GetSystemMetrics(SM_CYSCREEN);
+            MoveWindow(hwnd, (width + 32)/4, (width + 32)/4, (width + 32)/2, (height - 16)/2, TRUE);
+            SetWindowPos(hwnd, HWND_NOTOPMOST, width /4-8, height/4 - 16, width /2, height/2, SW_SHOWNORMAL);
             break;
           case IDM_CLRSB:
             term_clrsb(term);
