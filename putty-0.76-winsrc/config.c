@@ -2578,7 +2578,7 @@ void setup_config_box(struct controlbox *b, bool midsession,
 
             s = ctrl_getset(b, "Connection/SSH", "data",
                             "Data to send to the server");
-            ctrl_editbox(s, "Remote command:", 'r', 100,
+            ctrl_editbox(s, "Remote command (login script):", 'r', 100,
                          HELPCTX(ssh_command),
                          conf_editbox_handler, I(CONF_remote_cmd), I(1));
 
