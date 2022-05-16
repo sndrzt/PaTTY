@@ -917,7 +917,7 @@ void load_open_settings(settings_r *sesskey, Conf *conf)
     gpps(sesskey, "HostName", "", conf, CONF_host);
     gppfile(sesskey, "LogFileName", conf, CONF_logfilename);
     gppi(sesskey, "LogType", 1, conf, CONF_logtype);
-    gppi(sesskey, "LogFileClash", LGXF_ASK, conf, CONF_logxfovr);
+    gppi(sesskey, "LogFileClash", LGXF_OVR, conf, CONF_logxfovr);
     gppb(sesskey, "LogFlush", true, conf, CONF_logflush);
     gppb(sesskey, "LogHeader", true, conf, CONF_logheader);
     gppb(sesskey, "SSHLogOmitPasswords", true, conf, CONF_logomitpass);
@@ -1252,7 +1252,7 @@ void load_open_settings(settings_r *sesskey, Conf *conf)
     gppb(sesskey, "UTF8linedraw", false, conf, CONF_utf8linedraw);
     gppb(sesskey, "PasteRTF", false, conf, CONF_rtf_paste);
     gppi(sesskey, "MouseIsXterm", 0, conf, CONF_mouse_is_xterm);
-    gppb(sesskey, "RectSelect", false, conf, CONF_rect_select);
+    gppb(sesskey, "RectSelect", true, conf, CONF_rect_select);
     gppb(sesskey, "PasteControls", false, conf, CONF_paste_controls);
     gppb(sesskey, "MouseOverride", true, conf, CONF_mouse_override);
     for (i = 0; i < 256; i += 32) {
@@ -1287,7 +1287,7 @@ void load_open_settings(settings_r *sesskey, Conf *conf)
                       conf, CONF_mousepaste, CONF_mousepaste_custom);
     read_clip_setting(sesskey, "CtrlShiftIns", CLIPUI_DEFAULT_INS,
                       conf, CONF_ctrlshiftins, CONF_ctrlshiftins_custom);
-    read_clip_setting(sesskey, "CtrlShiftCV", CLIPUI_NONE,
+    read_clip_setting(sesskey, "CtrlShiftCV", CLIPUI_DEFAULT_INS,
                       conf, CONF_ctrlshiftcv, CONF_ctrlshiftcv_custom);
     /*
      * The empty default for LineCodePage will be converted later
