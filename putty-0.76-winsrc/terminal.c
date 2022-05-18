@@ -2988,7 +2988,7 @@ static void toggle_mode(Terminal *term, int mode, int query, bool state)
             deselect(term);
             if (!term->no_remote_resize) {
                 term->win_resize_pending = true;
-                term->win_resize_pending_w = state ? 132 : 117;
+                term->win_resize_pending_w = state ? 132 : 237;
                 term->win_resize_pending_h = term->rows;
                 term_schedule_update(term);
             }
