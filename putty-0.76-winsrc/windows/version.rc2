@@ -51,7 +51,7 @@ BEGIN
 	     * Oh well. */
 //	    VALUE "FileVersion",	TEXTVER HELPVER
 #else
-	    VALUE "FileVersion",	TEXTVER
+//	    VALUE "FileVersion",	TEXTVER
 #endif
 //	    VALUE "ProductVersion",	TEXTVER
 //	    VALUE "LegalCopyright",	"Copyright \251 " SHORT_COPYRIGHT_DETAILS "."
