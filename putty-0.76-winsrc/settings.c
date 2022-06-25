@@ -1174,7 +1174,7 @@ void load_open_settings(settings_r *sesskey, Conf *conf)
     gppi(sesskey, "LocalEcho", AUTO, conf, CONF_localecho);
     gppi(sesskey, "LocalEdit", AUTO, conf, CONF_localedit);
     gpps(sesskey, "Answerback", "PuTTY", conf, CONF_answerback);
-    gppb(sesskey, "AlwaysOnTop", false, conf, CONF_alwaysontop);
+    gppb(sesskey, "AlwaysOnTop", true, conf, CONF_alwaysontop);
     gppb(sesskey, "FullScreenOnAltEnter", true,
          conf, CONF_fullscreenonaltenter);
     gppb(sesskey, "HideMousePtr", false, conf, CONF_hide_mouseptr);
