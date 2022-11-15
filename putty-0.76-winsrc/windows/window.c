@@ -2681,7 +2681,7 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT message,
       case WM_MBUTTONUP:
       case WM_RBUTTONUP:
       case WM_CONTEXTMENU:
-        if (message == WM_RBUTTONDOWN &&
+        if ((message == WM_RBUTTONDOWN || message == WM_CONTEXTMENU) &&
             ((wParam & MK_CONTROL) ||
              (conf_get_int(conf, CONF_mouse_is_xterm) == 2))) {
             POINT cursorpos;
