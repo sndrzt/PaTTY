@@ -2680,6 +2680,7 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT message,
       case WM_LBUTTONUP:
       case WM_MBUTTONUP:
       case WM_RBUTTONUP:
+      case WM_CONTEXTMENU:
         if (message == WM_RBUTTONDOWN &&
             ((wParam & MK_CONTROL) ||
              (conf_get_int(conf, CONF_mouse_is_xterm) == 2))) {
@@ -2727,6 +2728,9 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT message,
                 button = MBT_RIGHT;
                 wParam &= ~MK_RBUTTON;
                 press = false;
+                break;
+              case WM_CONTEXTMENU:
+                term_request_paste(term, CLIP_SYSTEM);
                 break;
               default: /* shouldn't happen */
                 button = 0;
