@@ -460,7 +460,7 @@ static void close_session(void *ignored_context)
     for (i = 0; i < lenof(popup_menus); i++) {
         DeleteMenu(popup_menus[i].menu, IDM_RESTART, MF_BYCOMMAND);
         InsertMenu(popup_menus[i].menu, IDM_DUPSESS, MF_BYCOMMAND | MF_ENABLED,
-                   IDM_RESTART, "&Restart Session");
+                   IDM_RESTART, "Restart Sess&ion");
     }
 }
 
