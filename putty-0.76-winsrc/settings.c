@@ -1252,7 +1252,7 @@ void load_open_settings(settings_r *sesskey, Conf *conf)
     gppb(sesskey, "UTF8linedraw", false, conf, CONF_utf8linedraw);
     gppb(sesskey, "PasteRTF", false, conf, CONF_rtf_paste);
     gppi(sesskey, "MouseIsXterm", 0, conf, CONF_mouse_is_xterm);
-    gppb(sesskey, "RectSelect", true, conf, CONF_rect_select);
+    gppb(sesskey, "RectSelect", false, conf, CONF_rect_select);
     gppb(sesskey, "PasteControls", false, conf, CONF_paste_controls);
     gppb(sesskey, "MouseOverride", true, conf, CONF_mouse_override);
     for (i = 0; i < 256; i += 32) {
