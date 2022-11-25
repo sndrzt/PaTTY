@@ -951,7 +951,7 @@ void load_open_settings(settings_r *sesskey, Conf *conf)
     }
     gppb(sesskey, "TCPNoDelay", true, conf, CONF_tcp_nodelay);
     gppb(sesskey, "TCPKeepalives", false, conf, CONF_tcp_keepalives);
-    gpps(sesskey, "TerminalType", "xterm", conf, CONF_termtype);
+    gpps(sesskey, "TerminalType", "putty", conf, CONF_termtype);
     gpps(sesskey, "TerminalSpeed", "38400,38400", conf, CONF_termspeed);
     if (gppmap(sesskey, "TerminalModes", conf, CONF_ttymodes)) {
         /*
