@@ -2439,7 +2439,7 @@ void setup_config_box(struct controlbox *b, bool midsession,
                          conf_editbox_handler, I(CONF_termspeed), I(1));
 
             s = ctrl_getset(b, "Connection/Data", "env",
-                            "Environment variables");
+                            "UserEnv(sshd_config PermitUserEnvironment, AcceptEnv)");
             ctrl_columns(s, 2, 80, 20);
             ed = (struct environ_data *)
                 ctrl_alloc(b, sizeof(struct environ_data));
