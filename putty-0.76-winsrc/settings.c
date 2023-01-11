@@ -1140,7 +1140,7 @@ void load_open_settings(settings_r *sesskey, Conf *conf)
     gppb(sesskey, "NoApplicationKeys", false, conf, CONF_no_applic_k);
     gppb(sesskey, "NoApplicationCursors", false, conf, CONF_no_applic_c);
     gppb(sesskey, "NoMouseReporting", false, conf, CONF_no_mouse_rep);
-    gppb(sesskey, "NoRemoteResize", false, conf, CONF_no_remote_resize);
+    gppb(sesskey, "NoRemoteResize", true, conf, CONF_no_remote_resize);
     gppb(sesskey, "NoAltScreen", false, conf, CONF_no_alt_screen);
     gppb(sesskey, "NoRemoteWinTitle", false, conf, CONF_no_remote_wintitle);
     gppb(sesskey, "NoRemoteClearScroll", false,
