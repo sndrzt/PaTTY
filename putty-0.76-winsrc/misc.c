@@ -226,7 +226,7 @@ char *buildinfo(const char *newline)
     strbuf_catf(buf, "%sCompiler: clang %s", newline, __clang_version__);
 #elif defined __GNUC__ && defined __VERSION__
 #define FOUND_COMPILER
-    strbuf_catf(buf, "%sCompiler: gcc %s", newline, __VERSION__);
+    strbuf_catf(buf, "%sCompiler: sourceforge.net mingw-w64 x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z %s", newline, __VERSION__);
 #endif
 
 #if defined _MSC_VER
