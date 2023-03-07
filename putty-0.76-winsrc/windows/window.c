@@ -740,6 +740,7 @@ int WINAPI WinMain(HINSTANCE inst, HINSTANCE prev, LPSTR cmdline, int show)
             exwinmode |= WS_EX_TOPMOST;
         if (conf_get_bool(conf, CONF_sunken_edge))
             exwinmode |= WS_EX_CLIENTEDGE;
+        exwinmode |= WS_EX_ACCEPTFILES;
         wgs.term_hwnd = CreateWindowExW(
             exwinmode, uappname, uappname, winmode, CW_USEDEFAULT,
             CW_USEDEFAULT, guess_width, guess_height, NULL, NULL, inst, NULL);
@@ -2166,6 +2167,8 @@ static void free_hdc(HDC hdc)
 
 static bool need_backend_resize = false;
 
+char szFileName[MAX_PATH] = {0};
+char szScpArgs[MAX_PATH] = {0};
 static void wm_size_resize_term(LPARAM lParam, bool border)
 {
     int width = LOWORD(lParam);
@@ -2561,26 +2564,26 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT message,
           case IDM_SORT1:
             width = GetSystemMetrics(SM_CXSCREEN);
             height = GetSystemMetrics(SM_CYSCREEN);
-            MoveWindow(hwnd, 0, 0, (width + 32)/2, (height-16)/2, TRUE);
+            MoveWindow(hwnd, 0, 0, (width + 32)/2, (height-40)/2, TRUE);
             SetWindowPos(hwnd, HWND_NOTOPMOST, -8, 0, width /2, height/2, SW_SHOWNORMAL);
             break;
           case IDM_SORT2:
             width = GetSystemMetrics(SM_CXSCREEN);
             height = GetSystemMetrics(SM_CYSCREEN);
-            MoveWindow(hwnd, 0, 0, (width + 32)/2, (height - 16)/2, TRUE);
+            MoveWindow(hwnd, 0, 0, (width + 32)/2, (height - 40)/2, TRUE);
             SetWindowPos(hwnd, HWND_NOTOPMOST, width /2-8, 0, width /2, height/2, SW_SHOWNORMAL);
             break;
           case IDM_SORT3:
             width = GetSystemMetrics(SM_CXSCREEN);
             height = GetSystemMetrics(SM_CYSCREEN);
-            MoveWindow(hwnd, 0, 0, (width + 32)/2, (height - 16)/2, TRUE);
-            SetWindowPos(hwnd, HWND_NOTOPMOST, -8, height/2 - 16, width /2-8, height/2, SW_SHOWNORMAL);
+            MoveWindow(hwnd, 0, 0, (width + 32)/2, (height - 20)/2, TRUE);
+            SetWindowPos(hwnd, HWND_NOTOPMOST, -8, height/2 - 30, width /2-8, (height+38)/2, SW_SHOWNORMAL);
             break;
           case IDM_SORT4:
             width = GetSystemMetrics(SM_CXSCREEN);
             height = GetSystemMetrics(SM_CYSCREEN);
-            MoveWindow(hwnd, 0, 0, (width + 32)/2, (height - 16)/2, TRUE);
-            SetWindowPos(hwnd, HWND_NOTOPMOST, width /2-8, height/2 - 16, width /2, height/2, SW_SHOWNORMAL);
+            MoveWindow(hwnd, 0, 0, (width + 32)/2, (height - 20)/2, TRUE);
+            SetWindowPos(hwnd, HWND_NOTOPMOST, width /2-8, height/2 - 30, width /2, (height+38)/2, SW_SHOWNORMAL);
             break;
           case IDM_SORT5:
             width = GetSystemMetrics(SM_CXSCREEN);
@@ -2850,6 +2853,16 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT message,
             term_lost_clipboard_ownership(term, CLIP_SYSTEM);
         ignore_clip = false;
         return 0;
+      case WM_DROPFILES: {
+        UINT nFileCount = DragQueryFile((HDROP)wParam, (UINT)-1, NULL, 0);
+        for (int i = 0; i < nFileCount; i++) {
+          DragQueryFile((HDROP)wParam, i, szFileName, sizeof(szFileName));
+          sprintf(szScpArgs, "-pw \"intel\@123\" %s yun\@10.239.141.12:/home/yun/.steam/steam/steamapps/common/PixCapturePlayer", szFileName);
+          ShellExecute(hwnd, "open", "C:\\Pf\\putty-repo\\putty-0.76-winsrc\\windows\\pscp.exe", szScpArgs, NULL, SW_SHOW);
+        }
+        DragFinish((HDROP)wParam);
+        break;
+      }
       case WM_PAINT: {
         PAINTSTRUCT p;
 
