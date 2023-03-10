@@ -2396,7 +2396,21 @@ void setup_config_box(struct controlbox *b, bool midsession,
                              conf_editbox_handler, I(CONF_loghost), I(1));
             }
         }
-
+        {
+            //const char *label = "Host path for pscp transmision:";
+            s = ctrl_getset(b, "Connection", "pathhost", "Host path for pscp (DragDrop upload)");
+            ctrl_editbox(s, NULL, 'm', 100,
+                         HELPCTX(connection_pathhost),
+                         conf_editbox_handler, I(CONF_pathhost), I(1));
+        }
+        {
+            //const char *label = "Local path for pscp transmision:";
+            s = ctrl_getset(b, "Connection", "pathlocal", "Local path for pscp (Select download) PS1='\\u@\\h:\\w$ '");
+            ctrl_editbox(s, NULL, 'm', 100,
+                         HELPCTX(connection_pathlocal),
+                         conf_editbox_handler, I(CONF_pathlocal), I(1));
+        }
+ 
         /*
          * A sub-panel Connection/Data, containing options that
          * decide on data to send to the server.
@@ -2409,7 +2423,7 @@ void setup_config_box(struct controlbox *b, bool midsession,
             ctrl_editbox(s, "Auto-login username", 'u', 50,
                          HELPCTX(connection_username),
                          conf_editbox_handler, I(CONF_username), I(1));
-            ctrl_editbox(s, "Auto-login password", 'u', 50,
+            ctrl_editbox(s, "Auto-login password [NR]", 'u', 50,
                          HELPCTX(connection_password),
                          conf_editbox_handler, I(CONF_password), I(1));
             {
@@ -2796,7 +2810,7 @@ void setup_config_box(struct controlbox *b, bool midsession,
                           I(CONF_try_ki_auth));
 
             s = ctrl_getset(b, "Connection/SSH/Auth", "params",
-                            "Authentication parameters");
+                            "Key: [gitbash->ssh-keygen -t rsa->pub to authorized_keys]");
             ctrl_checkbox(s, "Allow agent forwarding", 'f',
                           HELPCTX(ssh_auth_agentfwd),
                           conf_checkbox_handler, I(CONF_agentfwd));
@@ -2804,7 +2818,7 @@ void setup_config_box(struct controlbox *b, bool midsession,
                           HELPCTX(ssh_auth_changeuser),
                           conf_checkbox_handler,
                           I(CONF_change_username));
-            ctrl_filesel(s, "Private key file for authentication:", 'k',
+            ctrl_filesel(s, "Private key: putty-keygen->load id_rsa, save id_rsa.ppk", 'k',
                          FILTER_KEY_FILES, false, "Select private key file",
                          HELPCTX(ssh_auth_privkey),
                          conf_filesel_handler, I(CONF_keyfile));

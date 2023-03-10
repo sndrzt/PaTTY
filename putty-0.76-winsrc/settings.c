@@ -713,6 +713,8 @@ void save_open_settings(settings_w *sesskey, Conf *conf)
     write_setting_b(sesskey, "SshNoShell", conf_get_bool(conf, CONF_ssh_no_shell));
     write_setting_i(sesskey, "SshProt", conf_get_int(conf, CONF_sshprot));
     write_setting_s(sesskey, "LogHost", conf_get_str(conf, CONF_loghost));
+    write_setting_s(sesskey, "PathHost", conf_get_str(conf, CONF_pathhost));
+    write_setting_s(sesskey, "PathLocal", conf_get_str(conf, CONF_pathlocal));
     write_setting_b(sesskey, "SSH2DES", conf_get_bool(conf, CONF_ssh2_des_cbc));
     write_setting_filename(sesskey, "PublicKeyFile", conf_get_filename(conf, CONF_keyfile));
     write_setting_s(sesskey, "RemoteCommand", conf_get_str(conf, CONF_remote_cmd));
@@ -1116,6 +1118,8 @@ void load_open_settings(settings_r *sesskey, Conf *conf)
         conf_set_int(conf, CONF_sshprot, sshprot);
     }
     gpps(sesskey, "LogHost", "", conf, CONF_loghost);
+    gpps(sesskey, "PathHost", "~", conf, CONF_pathhost);
+    gpps(sesskey, "PathLocal", "c:\\Downloads", conf, CONF_pathlocal);
     gppb(sesskey, "SSH2DES", false, conf, CONF_ssh2_des_cbc);
     gppb(sesskey, "SshNoAuth", false, conf, CONF_ssh_no_userauth);
     gppb(sesskey, "SshNoTrivialAuth", false, conf, CONF_ssh_no_trivial_userauth);

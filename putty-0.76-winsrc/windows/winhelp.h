@@ -84,6 +84,8 @@
 #define WINHELP_CTX_connection_ipversion "config-address-family"
 #define WINHELP_CTX_connection_tcpkeepalive "config-tcp-keepalives"
 #define WINHELP_CTX_connection_loghost "config-loghost"
+#define WINHELP_CTX_connection_pathhost "config-pathhost"
+#define WINHELP_CTX_connection_pathlocal "config-pathlocal"
 #define WINHELP_CTX_proxy_type "config-proxy-type"
 #define WINHELP_CTX_proxy_main "config-proxy"
 #define WINHELP_CTX_proxy_exclude "config-proxy-exclude"

@@ -183,7 +183,7 @@ plink.exe: agentf.o aqsync.o be_all_s.o be_misc.o callback.o clicons.o \
 		winplink.o winproxy.o winsecur.o winselcli.o winser.o \
 		winshare.o winstore.o wintime.o winucs.o winx11.o x11fwd.o \
 		-ladvapi32 -lcomdlg32 -lgdi32 -limm32 -lole32 -lshell32 \
-		-luser32 -liphlpapi
+		-luser32 -liphlpapi -lshlwapi
 
 pscp.exe: agentf.o aqsync.o be_misc.o be_ssh.o callback.o clicons.o \
 		cmdline.o conf.o console.o cproxy.o ecc.o errsock.o \
@@ -227,7 +227,7 @@ pscp.exe: agentf.o aqsync.o be_misc.o be_ssh.o callback.o clicons.o \
 		winnohlp.o winnoise.o winnojmp.o winnpc.o winnps.o \
 		winpgntc.o winproxy.o winsecur.o winselcli.o winsftp.o \
 		winshare.o winstore.o wintime.o winucs.o x11fwd.o -ladvapi32 \
-		-lcomdlg32 -lgdi32 -limm32 -lole32 -lshell32 -luser32 -liphlpapi
+		-lcomdlg32 -lgdi32 -limm32 -lole32 -lshell32 -luser32 -liphlpapi -lshlwapi
 
 psftp.exe: agentf.o aqsync.o be_misc.o be_ssh.o callback.o clicons.o \
 		cmdline.o conf.o console.o cproxy.o ecc.o errsock.o \
@@ -272,7 +272,7 @@ psftp.exe: agentf.o aqsync.o be_misc.o be_ssh.o callback.o clicons.o \
 		winnpc.o winnps.o winpgntc.o winproxy.o winsecur.o \
 		winselcli.o winsftp.o winshare.o winstore.o wintime.o \
 		winucs.o x11fwd.o -ladvapi32 -lcomdlg32 -lgdi32 -limm32 \
-		-lole32 -lshell32 -luser32 -liphlpapi
+		-lole32 -lshell32 -luser32 -liphlpapi -lshlwapi
 
 psocks.exe: be_misc.o callback.o conf.o console.o errsock.o logging.o \
 		marshal.o memory.o misc.o nocproxy.o norand.o portfwd.o \
@@ -287,7 +287,7 @@ psocks.exe: be_misc.o callback.o conf.o console.o errsock.o logging.o \
 		version.o wcwidth.o wincliloop.o wincons.o winhandl.o \
 		winhsock.o winmisc.o winmiscs.o winnet.o winnohlp.o \
 		winproxy.o winselcli.o winsocks.o -ladvapi32 -lcomdlg32 \
-		-lgdi32 -limm32 -lole32 -lshell32 -luser32 -liphlpapi
+		-lgdi32 -limm32 -lole32 -lshell32 -luser32 -liphlpapi -lshlwapi
 
 putty.exe: agentf.o aqsync.o be_all_s.o be_misc.o callback.o cmdline.o \
 		conf.o config.o cproxy.o dialog.o ecc.o errsock.o ldisc.o \
@@ -334,7 +334,7 @@ putty.exe: agentf.o aqsync.o be_all_s.o be_misc.o callback.o cmdline.o \
 		winnps.o winpgntc.o winprint.o winproxy.o winsecur.o \
 		winselgui.o winser.o winshare.o winstore.o wintime.o \
 		winucs.o winutils.o winx11.o x11fwd.o -ladvapi32 -lcomdlg32 \
-		-lgdi32 -limm32 -lole32 -lshell32 -luser32 -liphlpapi
+		-lgdi32 -limm32 -lole32 -lshell32 -luser32 -liphlpapi -lshlwapi
 
 puttygen.exe: conf.o ecc.o import.o marshal.o memory.o millerrabin.o misc.o \
 		mpint.o mpunsafe.o notiming.o pockle.o primecandidate.o \
@@ -357,7 +357,7 @@ puttygen.exe: conf.o ecc.o import.o marshal.o memory.o millerrabin.o misc.o \
 		tree234.o utils.o version.o wcwidth.o winctrls.o winhelp.o \
 		winmisc.o winmiscs.o winnoise.o winnojmp.o winpgen.o \
 		winsecur.o winstore.o wintime.o winutils.o -ladvapi32 \
-		-lcomdlg32 -lgdi32 -limm32 -lole32 -lshell32 -luser32 -liphlpapi
+		-lcomdlg32 -lgdi32 -limm32 -lole32 -lshell32 -luser32 -liphlpapi -lshlwapi
 
 puttytel.exe: be_misc.o be_nos_s.o callback.o cmdline.o conf.o config.o \
 		dialog.o errsock.o ldisc.o logging.o marshal.o memory.o \
@@ -380,7 +380,7 @@ puttytel.exe: be_misc.o be_nos_s.o callback.o cmdline.o conf.o config.o \
 		winjump.o winmisc.o winmiscs.o winnet.o winprint.o \
 		winproxy.o winsecur.o winselgui.o winser.o winstore.o \
 		wintime.o winucs.o winutils.o -ladvapi32 -lcomdlg32 -lgdi32 \
-		-limm32 -lole32 -lshell32 -luser32 -liphlpapi
+		-limm32 -lole32 -lshell32 -luser32 -liphlpapi -lshlwapi
 
 testcrypt.exe: ecc.o marshal.o memory.o millerrabin.o mpint.o mpunsafe.o \
 		pockle.o primecandidate.o smallprimes.o sshaes.o ssharcf.o \
@@ -396,7 +396,7 @@ testcrypt.exe: ecc.o marshal.o memory.o millerrabin.o mpint.o mpunsafe.o \
 		sshcrc.o sshcrcda.o sshdes.o sshdh.o sshdss.o sshdssg.o \
 		sshecc.o sshecdsag.o sshhmac.o sshmd5.o sshprime.o sshprng.o \
 		sshpubk.o sshrsa.o sshrsag.o sshsh256.o sshsh512.o sshsha.o \
-		sshsha3.o testcrypt.o tree234.o utils.o winmiscs.o -liphlpapi
+		sshsha3.o testcrypt.o tree234.o utils.o winmiscs.o -liphlpapi -lshlwapi
 
 agentf.o: ../agentf.c ../putty.h ../ssh.h ../pageant.h ../sshchan.h \
 		../defs.h ../puttyps.h ../network.h ../misc.h ../marshal.h \

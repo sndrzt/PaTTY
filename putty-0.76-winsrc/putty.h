@@ -1386,6 +1386,8 @@ NORETURN void cleanup_exit(int);
     X(BOOL, NONE, tcp_nodelay) \
     X(BOOL, NONE, tcp_keepalives) \
     X(STR, NONE, loghost) /* logical host being contacted, for host key check */ \
+    X(STR, NONE, pathhost) /* path host for pscp */ \
+    X(STR, NONE, pathlocal) /* path local for pscp */ \
     /* Proxy options */ \
     X(STR, NONE, proxy_exclude_list) \
     X(INT, NONE, proxy_dns) /* FORCE_ON, FORCE_OFF, AUTO */ \
