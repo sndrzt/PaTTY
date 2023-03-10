@@ -2149,7 +2149,7 @@ void setup_config_box(struct controlbox *b, bool midsession,
 
     s = ctrl_getset(b, "Window/Appearance", "font",
                     "Font settings");
-    ctrl_fontsel(s, "Font used in the terminal window", 'n',
+    ctrl_fontsel(s, "Font used (Courier New 8px:134x71/34, 7px:188x82/39)", 'n',
                  HELPCTX(appearance_font),
                  conf_fontsel_handler, I(CONF_font));
 
