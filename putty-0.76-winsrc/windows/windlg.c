@@ -548,7 +548,7 @@ static INT_PTR CALLBACK GenericMainDlgProc(HWND hwnd, UINT msg,
                  i++) {
                 if (c->ctrl) {
                     dlg_set_focus(c->ctrl, &dp);
-		    if (cnt++ > 4)
+		    if (cnt++ > 5)
                         break;
                 }
             }

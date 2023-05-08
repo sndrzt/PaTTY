@@ -13,7 +13,7 @@
 #define PRINTER_DISABLED_STRING "None (printing disabled)"
 
 #define HOST_BOX_TITLE "Host Name (or IP address)"
-#define PORT_BOX_TITLE "Port"
+#define PORT_BOX_TITLE ":"
 
 void conf_radiobutton_handler(union control *ctrl, dlgparam *dlg,
                               void *data, int event)
@@ -1732,17 +1732,22 @@ void setup_config_box(struct controlbox *b, bool midsession,
 
         s = ctrl_getset(b, "Session", "hostport",
                         "Specify the destination you want to connect to");
-        ctrl_columns(s, 2, 75, 25);
-        c = ctrl_editbox(s, HOST_BOX_TITLE, 'n', 100,
+        ctrl_columns(s, 3, 44, 12, 44);
+        c = ctrl_editbox(s, HOST_BOX_TITLE, 'n', 78,
                          HELPCTX(session_hostname),
                          config_host_handler, I(0), I(0));
         c->generic.column = 0;
         hp->host = c;
-        c = ctrl_editbox(s, PORT_BOX_TITLE, 'p', 100,
+        c = ctrl_editbox(s, PORT_BOX_TITLE, 'p', 68,
                          HELPCTX(session_hostname),
                          config_port_handler, I(0), I(0));
         c->generic.column = 1;
         hp->port = c;
+        c = ctrl_editbox(s, "Bmc", 'n', 78,
+                         HELPCTX(session_bmcurl),
+                         conf_editbox_handler, I(CONF_bmcurl), I(1));
+        c->generic.column = 2;
+        hp->host = c;
 
         ctrl_columns(s, 1, 100);
         c = ctrl_text(s, "Connection type:", HELPCTX(session_hostname));
@@ -2420,12 +2425,25 @@ void setup_config_box(struct controlbox *b, bool midsession,
 
             s = ctrl_getset(b, "Connection/Data", "login",
                             "Login details");
-            ctrl_editbox(s, "Auto-login username", 'u', 50,
+	        ctrl_columns(s, 2, 50, 50);
+            c = ctrl_editbox(s, "Auto-login username", 'u', 100,
                          HELPCTX(connection_username),
                          conf_editbox_handler, I(CONF_username), I(1));
-            ctrl_editbox(s, "Auto-login password [NR]", 'u', 50,
+	        c->generic.column = 0;
+            c = ctrl_editbox(s, "Auto-login password [NR]", 'u', 100,
                          HELPCTX(connection_password),
                          conf_editbox_handler, I(CONF_password), I(1));
+	        c->generic.column = 1;
+			
+            c = ctrl_editbox(s, "Bmc user", 'u', 62,
+                         HELPCTX(connection_bmcuser),
+                         conf_editbox_handler, I(CONF_bmcuser), I(1));
+	        c->generic.column = 0;
+            c = ctrl_editbox(s, "Bcm pass", 'u', 62,
+                         HELPCTX(connection_bmcpass),
+                         conf_editbox_handler, I(CONF_bmcpass), I(1));
+	        c->generic.column = 1;
+
             {
                 /* We assume the local username is sufficiently stable
                  * to include on the dialog box. */

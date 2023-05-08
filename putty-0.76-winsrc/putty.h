@@ -1453,6 +1453,9 @@ NORETURN void cleanup_exit(int);
     X(STR, NONE, username) \
     X(BOOL, NONE, username_from_env) \
     X(STR, NONE, password) \
+    X(STR, NONE, bmcurl) \
+    X(STR, NONE, bmcuser) \
+    X(STR, NONE, bmcpass) \
     X(STR, NONE, localusername) \
     X(BOOL, NONE, rfc_environ) \
     X(BOOL, NONE, passive_telnet) \

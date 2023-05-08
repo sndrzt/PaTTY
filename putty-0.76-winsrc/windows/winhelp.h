@@ -14,6 +14,8 @@
 #define WINHELP_CTX_no_help NULL
 
 #define WINHELP_CTX_session_hostname "config-hostname"
+#define WINHELP_CTX_session_hostport "config-hostport"
+#define WINHELP_CTX_session_bmcurl "config-bmcurl"
 #define WINHELP_CTX_session_saved "config-saving"
 #define WINHELP_CTX_session_coe "config-closeonexit"
 #define WINHELP_CTX_logging_main "config-logging"
@@ -78,6 +80,8 @@
 #define WINHELP_CTX_connection_termspeed "config-termspeed"
 #define WINHELP_CTX_connection_username "config-username"
 #define WINHELP_CTX_connection_password "config-password"
+#define WINHELP_CTX_connection_bmcuser "config-bmcuser"
+#define WINHELP_CTX_connection_bmcpass "config-bmcpass"
 #define WINHELP_CTX_connection_username_from_env "config-username-from-env"
 #define WINHELP_CTX_connection_keepalive "config-keepalive"
 #define WINHELP_CTX_connection_nodelay "config-nodelay"

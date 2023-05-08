@@ -635,6 +635,7 @@ void save_open_settings(settings_w *sesskey, Conf *conf)
 
     write_setting_i(sesskey, "Present", 1);
     write_setting_s(sesskey, "HostName", conf_get_str(conf, CONF_host));
+    write_setting_s(sesskey, "Bmcurl", conf_get_str(conf, CONF_bmcurl));
     write_setting_filename(sesskey, "LogFileName", conf_get_filename(conf, CONF_logfilename));
     write_setting_i(sesskey, "LogType", conf_get_int(conf, CONF_logtype));
     write_setting_i(sesskey, "LogFileClash", conf_get_int(conf, CONF_logxfovr));
@@ -680,6 +681,8 @@ void save_open_settings(settings_w *sesskey, Conf *conf)
     wmap(sesskey, "Environment", conf, CONF_environmt, true);
     write_setting_s(sesskey, "UserName", conf_get_str(conf, CONF_username));
     write_setting_s(sesskey, "Password", conf_get_str(conf, CONF_password));
+    write_setting_s(sesskey, "Bmcuser", conf_get_str(conf, CONF_bmcuser));
+    write_setting_s(sesskey, "Bmcpass", conf_get_str(conf, CONF_bmcpass));
     write_setting_b(sesskey, "UserNameFromEnvironment", conf_get_bool(conf, CONF_username_from_env));
     write_setting_s(sesskey, "LocalUserName", conf_get_str(conf, CONF_localusername));
     write_setting_b(sesskey, "NoPTY", conf_get_bool(conf, CONF_nopty));
@@ -917,6 +920,9 @@ void load_open_settings(settings_r *sesskey, Conf *conf)
     conf_set_str(conf, CONF_ssh_nc_host, "");
 
     gpps(sesskey, "HostName", "", conf, CONF_host);
+    gpps(sesskey, "Bmcurl", "", conf, CONF_bmcurl);
+    gpps(sesskey, "Bmcuser", "", conf, CONF_bmcuser);
+    gpps(sesskey, "Bmcpass", "", conf, CONF_bmcpass);
     gppfile(sesskey, "LogFileName", conf, CONF_logfilename);
     gppi(sesskey, "LogType", 1, conf, CONF_logtype);
     gppi(sesskey, "LogFileClash", LGXF_OVR, conf, CONF_logxfovr);
