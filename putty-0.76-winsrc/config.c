@@ -1743,9 +1743,9 @@ void setup_config_box(struct controlbox *b, bool midsession,
                          config_port_handler, I(0), I(0));
         c->generic.column = 1;
         hp->port = c;
-        c = ctrl_editbox(s, "Bmc", 'n', 78,
-                         HELPCTX(session_bmcurl),
-                         conf_editbox_handler, I(CONF_bmcurl), I(1));
+        c = ctrl_editbox(s, "100G", 'n', 78,
+                         HELPCTX(session_privateip),
+                         conf_editbox_handler, I(CONF_privateip), I(1));
         c->generic.column = 2;
         hp->host = c;
 
@@ -1804,21 +1804,25 @@ void setup_config_box(struct controlbox *b, bool midsession,
     s = ctrl_getset(b, "Session", "savedsessions",
                     midsession ? "Save the current session settings" :
                     "Load, save or delete a stored session");
-    ctrl_columns(s, 2, 75, 25);
+    ctrl_columns(s, 2, 65, 35);
     get_sesslist(&ssd->sesslist, true);
     ssd->editbox = ctrl_editbox(s, "Saved Sessions", 'e', 100,
                                 HELPCTX(session_saved),
                                 sessionsaver_handler, P(ssd), P(NULL));
     ssd->editbox->generic.column = 0;
+    c = ctrl_editbox(s, "Location", 'n', 100,
+                                HELPCTX(session_location),
+                                conf_editbox_handler, I(CONF_location), I(1));
+    c->generic.column = 1;
     /* Reset columns so that the buttons are alongside the list, rather
      * than alongside that edit box. */
     ctrl_columns(s, 1, 100);
-    ctrl_columns(s, 2, 75, 25);
+    ctrl_columns(s, 2, 65, 35);
     ssd->listbox = ctrl_listbox(s, NULL, NO_SHORTCUT,
                                 HELPCTX(session_saved),
                                 sessionsaver_handler, P(ssd));
     ssd->listbox->generic.column = 0;
-    ssd->listbox->listbox.height = 8;
+    ssd->listbox->listbox.height = 9;
     if (!midsession) {
         ssd->loadbutton = ctrl_pushbutton(s, "Load", 'l',
                                           HELPCTX(session_saved),
@@ -1841,6 +1845,10 @@ void setup_config_box(struct controlbox *b, bool midsession,
                                          HELPCTX(session_saved),
                                          sessionsaver_handler, P(ssd));
         ssd->delbutton->generic.column = 1;
+        c = ctrl_editbox(s, "Bmc url", 'n', 100,
+                                    HELPCTX(session_bmcurl),
+                                    conf_editbox_handler, I(CONF_bmcurl), I(1));
+        c->generic.column = 1;
     } else {
         /* Disable the Delete button mid-session too, for UI consistency. */
         ssd->delbutton = NULL;

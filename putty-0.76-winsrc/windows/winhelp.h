@@ -16,6 +16,8 @@
 #define WINHELP_CTX_session_hostname "config-hostname"
 #define WINHELP_CTX_session_hostport "config-hostport"
 #define WINHELP_CTX_session_bmcurl "config-bmcurl"
+#define WINHELP_CTX_session_location "config-location"
+#define WINHELP_CTX_session_privateip "config-privateip"
 #define WINHELP_CTX_session_saved "config-saving"
 #define WINHELP_CTX_session_coe "config-closeonexit"
 #define WINHELP_CTX_logging_main "config-logging"
