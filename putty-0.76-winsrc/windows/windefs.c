@@ -17,7 +17,7 @@ FontSpec *platform_default_fontspec(const char *name)
 Filename *platform_default_filename(const char *name)
 {
     if (!strcmp(name, "LogFileName"))
-        return filename_from_str("putty_${wk}.log");
+        return filename_from_str("putty-${host}-${wk}.log");
     else
         return filename_from_str("");
 }

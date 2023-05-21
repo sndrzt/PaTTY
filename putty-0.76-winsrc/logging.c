@@ -117,6 +117,7 @@ static void logfopen_callback(void *vctx, int mode)
 			tm = ltime();
 			strftime(buf, 24, "%Y%m%d_%H%M%S", &tm);
 			strrpc(ctx->currlogfilename->path, "${wk}", buf);
+			strrpc(ctx->currlogfilename->path, "${host}", conf_get_str(ctx->conf, CONF_host));
 		}
         ctx->lgfp = f_open(ctx->currlogfilename, fmode, false);
         if (ctx->lgfp) {
