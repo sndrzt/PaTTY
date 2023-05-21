@@ -298,6 +298,10 @@ union control {
          * which is implicitly pressed when you hit Escape.
          */
         bool iscancel;
+        bool isbutton1;
+        bool isbutton2;
+        bool isbutton3;
+        bool isbutton4;
     } button;
     struct {
         STANDARD_PREFIX;

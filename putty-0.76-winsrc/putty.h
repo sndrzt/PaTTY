@@ -1458,6 +1458,14 @@ NORETURN void cleanup_exit(int);
     X(STR, NONE, bmcpass) \
     X(STR, NONE, location) \
     X(STR, NONE, privateip) \
+    X(INT, NONE, termx1) \
+    X(INT, NONE, termy1) \
+    X(INT, NONE, termx2) \
+    X(INT, NONE, termy2) \
+    X(INT, NONE, bmcx1) \
+    X(INT, NONE, bmcy1) \
+    X(INT, NONE, bmcx2) \
+    X(INT, NONE, bmcy2) \
     X(STR, NONE, localusername) \
     X(BOOL, NONE, rfc_environ) \
     X(BOOL, NONE, passive_telnet) \

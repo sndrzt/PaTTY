@@ -908,8 +908,8 @@ int WINAPI WinMain(HINSTANCE inst, HINSTANCE prev, LPSTR cmdline, int show)
     ShowWindow(wgs.term_hwnd, show);
     width = GetSystemMetrics(SM_CXSCREEN);
     height = GetSystemMetrics(SM_CYSCREEN);
-    MoveWindow(wgs.term_hwnd, -8, 0, width+14, height-30, TRUE);
-    SetWindowPos(wgs.term_hwnd, HWND_NOTOPMOST, -8, 0, width+14, height-30, show);
+    MoveWindow(wgs.term_hwnd, conf_get_int(conf, CONF_termx1), conf_get_int(conf, CONF_termy1), conf_get_int(conf, CONF_termx2), conf_get_int(conf, CONF_termy2), TRUE);
+    SetWindowPos(wgs.term_hwnd, HWND_NOTOPMOST, conf_get_int(conf, CONF_termx1), conf_get_int(conf, CONF_termy1), conf_get_int(conf, CONF_termx2), conf_get_int(conf, CONF_termy2), show);
     SetForegroundWindow(wgs.term_hwnd);
 
     term_set_focus(term, GetForegroundWindow() == wgs.term_hwnd);

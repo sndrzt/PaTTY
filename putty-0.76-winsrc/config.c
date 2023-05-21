@@ -737,7 +737,7 @@ static void sshbug_handler(union control *ctrl, dlgparam *dlg,
 
 struct sessionsaver_data {
     union control *editbox, *listbox, *loadbutton, *savebutton, *delbutton;
-    union control *okbutton, *cancelbutton;
+    union control *okbutton, *cancelbutton, *bmcbutton, *button1, *button2, *button3, *button4;
     struct sesslist sesslist;
     bool midsession;
     char *savedsession;     /* the current contents of ssd->editbox */
@@ -912,6 +912,15 @@ static void sessionsaver_handler(union control *ctrl, dlgparam *dlg,
                 dlg_beep(dlg);
         } else if (ctrl == ssd->cancelbutton) {
             dlg_end(dlg, 0);
+        } else if (ctrl == ssd->bmcbutton) {
+			char url[1024] = {0};
+			sprintf(url, "https://%s", conf_get_str(conf, CONF_bmcurl));
+			ShellExecute(NULL, "open", "chrome.exe", url, NULL, SW_SHOW);
+        } else if (ctrl == ssd->button1) {
+			MessageBox(NULL, "url", "url", MB_OK);
+        } else if (ctrl == ssd->button2) {
+        } else if (ctrl == ssd->button3) {
+        } else if (ctrl == ssd->button4) {
         }
     }
 }
@@ -1715,6 +1724,10 @@ void setup_config_box(struct controlbox *b, bool midsession,
                                         sessionsaver_handler, P(ssd));
     ssd->cancelbutton->button.iscancel = true;
     ssd->cancelbutton->generic.column = 4;
+    ssd->bmcbutton = ctrl_pushbutton(s, "Bmc", 'b', HELPCTX(no_help),
+                                        sessionsaver_handler, P(ssd));
+    ssd->bmcbutton->button.iscancel = false;
+    ssd->bmcbutton->generic.column = 2;
     /* We carefully don't close the 5-column part, so that platform-
      * specific add-ons can put extra buttons alongside Open and Cancel. */
 
@@ -1743,7 +1756,7 @@ void setup_config_box(struct controlbox *b, bool midsession,
                          config_port_handler, I(0), I(0));
         c->generic.column = 1;
         hp->port = c;
-        c = ctrl_editbox(s, "100G", 'n', 78,
+        c = ctrl_editbox(s, "100G", 'n', 76,
                          HELPCTX(session_privateip),
                          conf_editbox_handler, I(CONF_privateip), I(1));
         c->generic.column = 2;
@@ -2109,15 +2122,27 @@ void setup_config_box(struct controlbox *b, bool midsession,
 
     if (!resize_forbidden || !midsession) {
         s = ctrl_getset(b, "Window", "size", "Set the size of the window");
-        ctrl_columns(s, 2, 50, 50);
-        c = ctrl_editbox(s, "Columns", 'm', 100,
+        ctrl_columns(s, 6, 30, 30, 10, 10, 10, 10);
+        c = ctrl_editbox(s, "Cols", 'm', 50,
                          HELPCTX(window_size),
                          conf_editbox_handler, I(CONF_width), I(-1));
         c->generic.column = 0;
-        c = ctrl_editbox(s, "Rows", 'r', 100,
+        c = ctrl_editbox(s, "Rows", 'r', 50,
                          HELPCTX(window_size),
                          conf_editbox_handler, I(CONF_height),I(-1));
         c->generic.column = 1;
+        ssd->button1 = ctrl_pushbutton(s, "1", 'b', HELPCTX(no_help),
+                         sessionsaver_handler, P(ssd));
+        ssd->button1->generic.column = 2;
+        ssd->button2 = ctrl_pushbutton(s, "2", 'b', HELPCTX(no_help),
+                         sessionsaver_handler, P(ssd));
+        ssd->button2->generic.column = 3;
+        ssd->button3 = ctrl_pushbutton(s, "3", 'b', HELPCTX(no_help),
+                         sessionsaver_handler, P(ssd));
+        ssd->button3->generic.column = 4;
+        ssd->button4 = ctrl_pushbutton(s, "4", 'b', HELPCTX(no_help),
+                         sessionsaver_handler, P(ssd));
+        ssd->button4->generic.column = 5;
         ctrl_columns(s, 1, 100);
     }
 
@@ -2139,6 +2164,42 @@ void setup_config_box(struct controlbox *b, bool midsession,
                   HELPCTX(window_erased),
                   conf_checkbox_handler,
                   I(CONF_erase_to_scrollback));
+
+	s = ctrl_getset(b, "Window", "terminal posizion", "Set the posizion of the terminal/bmc window");
+	ctrl_columns(s, 4, 25, 25, 25, 25);
+	c = ctrl_editbox(s, "termx1", 'r', 47,
+					 HELPCTX(window_termx1),
+					 conf_editbox_handler, I(CONF_termx1), I(-1));
+	c->generic.column = 0;
+	c = ctrl_editbox(s, "termy1", 'r', 47,
+					 HELPCTX(window_termy1),
+					 conf_editbox_handler, I(CONF_termy1),I(-1));
+	c->generic.column = 1;
+	 c = ctrl_editbox(s, "termx2", 'r', 47,
+					 HELPCTX(window_termx2),
+					 conf_editbox_handler, I(CONF_termx2), I(-1));
+	c->generic.column = 2;
+	c = ctrl_editbox(s, "termy2", 'r', 47,
+					 HELPCTX(window_termy2),
+					 conf_editbox_handler, I(CONF_termy2),I(-1));
+	c->generic.column = 3;
+
+	c = ctrl_editbox(s, "bmcx1", 'm', 50,
+					 HELPCTX(window_bmcx1),
+					 conf_editbox_handler, I(CONF_bmcx1), I(-1));
+	c->generic.column = 0;
+	c = ctrl_editbox(s, "bmcy1", 'm', 50,
+					 HELPCTX(window_bmcy2),
+					 conf_editbox_handler, I(CONF_bmcy1),I(-1));
+	c->generic.column = 1;
+	 c = ctrl_editbox(s, "bmcx2", 'm', 50,
+					 HELPCTX(window_bmcx2),
+					 conf_editbox_handler, I(CONF_bmcx2), I(-1));
+	c->generic.column = 2;
+	c = ctrl_editbox(s, "bmcy2", 'm', 50,
+					 HELPCTX(window_bmcy2),
+					 conf_editbox_handler, I(CONF_bmcy2),I(-1));
+	c->generic.column = 3;
 
     /*
      * The Window/Appearance panel.
@@ -2434,11 +2495,11 @@ void setup_config_box(struct controlbox *b, bool midsession,
             s = ctrl_getset(b, "Connection/Data", "login",
                             "Login details");
 	        ctrl_columns(s, 2, 50, 50);
-            c = ctrl_editbox(s, "Auto-login username", 'u', 100,
+            c = ctrl_editbox(s, "User", 'u', 70,
                          HELPCTX(connection_username),
                          conf_editbox_handler, I(CONF_username), I(1));
 	        c->generic.column = 0;
-            c = ctrl_editbox(s, "Auto-login password [NR]", 'u', 100,
+            c = ctrl_editbox(s, "Passwd [NR]", 'p', 70,
                          HELPCTX(connection_password),
                          conf_editbox_handler, I(CONF_password), I(1));
 	        c->generic.column = 1;
@@ -2471,12 +2532,15 @@ void setup_config_box(struct controlbox *b, bool midsession,
 
             s = ctrl_getset(b, "Connection/Data", "term",
                             "Terminal details");
-            ctrl_editbox(s, "Terminal-type string", 't', 50,
+			ctrl_columns(s, 2, 58, 42);
+            c = ctrl_editbox(s, "Terminal-type", 't', 56,
                          HELPCTX(connection_termtype),
                          conf_editbox_handler, I(CONF_termtype), I(1));
-            ctrl_editbox(s, "Terminal speeds", 's', 50,
+		    c->generic.column = 0;
+            c = ctrl_editbox(s, "Speeds", 's', 65,
                          HELPCTX(connection_termspeed),
                          conf_editbox_handler, I(CONF_termspeed), I(1));
+		    c->generic.column = 1;
 
             s = ctrl_getset(b, "Connection/Data", "env",
                             "UserEnv(sshd_config PermitUserEnvironment, AcceptEnv)");
