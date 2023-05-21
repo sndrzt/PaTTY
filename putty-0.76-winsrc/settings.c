@@ -646,6 +646,10 @@ void save_open_settings(settings_w *sesskey, Conf *conf)
     write_setting_i(sesskey, "Bmcy1", conf_get_int(conf, CONF_bmcy1));
     write_setting_i(sesskey, "Bmcx2", conf_get_int(conf, CONF_bmcx2));
     write_setting_i(sesskey, "Bmcy2", conf_get_int(conf, CONF_bmcy2));
+    write_setting_s(sesskey, "Triggertext1", conf_get_str(conf, CONF_triggertext1));
+    write_setting_s(sesskey, "Triggeraction1", conf_get_str(conf, CONF_triggeraction1));
+    write_setting_s(sesskey, "Triggertext2", conf_get_str(conf, CONF_triggertext2));
+    write_setting_s(sesskey, "Triggeraction2", conf_get_str(conf, CONF_triggeraction2));
     write_setting_filename(sesskey, "LogFileName", conf_get_filename(conf, CONF_logfilename));
     write_setting_i(sesskey, "LogType", conf_get_int(conf, CONF_logtype));
     write_setting_i(sesskey, "LogFileClash", conf_get_int(conf, CONF_logxfovr));
@@ -943,6 +947,10 @@ void load_open_settings(settings_r *sesskey, Conf *conf)
     gppi(sesskey, "Bmcy1", 0, conf, CONF_bmcy1);
     gppi(sesskey, "Bmcx2", 978, conf, CONF_bmcx2);
     gppi(sesskey, "Bmcy2", 1040, conf, CONF_bmcy2);
+    gpps(sesskey, "Triggertext1", " established", conf, CONF_triggertext1);
+    gpps(sesskey, "Triggeraction1", "chrome openbmc", conf, CONF_triggeraction1);
+    gpps(sesskey, "Triggertext2", "nginx-server-deployment-", conf, CONF_triggertext2);
+    gpps(sesskey, "Triggeraction2", "putty spr33", conf, CONF_triggeraction2);
     gppfile(sesskey, "LogFileName", conf, CONF_logfilename);
     gppi(sesskey, "LogType", 1, conf, CONF_logtype);
     gppi(sesskey, "LogFileClash", LGXF_OVR, conf, CONF_logxfovr);

@@ -2261,7 +2261,21 @@ void setup_config_box(struct controlbox *b, bool midsession,
     ctrl_checkbox(s, "Warn before closing window", 'w',
                   HELPCTX(behaviour_closewarn),
                   conf_checkbox_handler, I(CONF_warn_on_close));
+    s = ctrl_getset(b, "Window/Behaviour", "trigger",
+                    "Trigger on text");
 
+    c = ctrl_editbox(s, "trigger text1:", 't', 90,
+                 HELPCTX(window_triggertext1),
+                 conf_editbox_handler, I(CONF_triggertext1), I(1));
+    c = ctrl_editbox(s, "action:", 't', 90,
+                 HELPCTX(window_triggeraction1),
+                 conf_editbox_handler, I(CONF_triggeraction1), I(1));
+    c = ctrl_editbox(s, "trigger text2:", 't', 90,
+                 HELPCTX(window_triggertext2),
+                 conf_editbox_handler, I(CONF_triggertext2), I(1));
+    c = ctrl_editbox(s, "action:", 't', 90,
+                 HELPCTX(window_triggeraction2),
+                 conf_editbox_handler, I(CONF_triggeraction2), I(1));
     /*
      * The Window/Translation panel.
      */

@@ -1516,6 +1516,10 @@ NORETURN void cleanup_exit(int);
     X(BOOL, NONE, osx_option_meta) \
     X(BOOL, NONE, osx_command_meta) \
     X(STR, NONE, wintitle) /* initial window title */ \
+    X(STR, NONE, triggertext1) \
+    X(STR, NONE, triggeraction1) \
+    X(STR, NONE, triggertext2) \
+    X(STR, NONE, triggeraction2) \
     /* Terminal options */ \
     X(INT, NONE, savelines) \
     X(BOOL, NONE, dec_om) \
